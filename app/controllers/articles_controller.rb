@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find(params[:id])
+    @article = find_by_id(params[:id])
   end
 
   def new
@@ -19,5 +19,22 @@ class ArticlesController < ApplicationController
     redirect_to article_path(@article)
   end
 
+  def edit
+    @article = find_by_id(params[:id])
+  end
+
+  def update
+    # raise params.inspect
+    @article = find_by_id(params[:id])
+    @article.update(title: params[:article][:title], description: params[:article][:description])
+    redirect_to article_path(@article)
+  end
+
+
+  private
+
+    def find_by_id(id)
+      @article = Article.find(id)
+    end
   # add edit and update methods here
 end
